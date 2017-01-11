@@ -8,44 +8,16 @@ public class FinalProject {
 
     public static Random randGen = new Random();
 
-    public static int topButton;
-    public static int bottomButton;
-    public static int leftButton;
-    public static int rightButon;
 
     public static void main(String[] args) {
         DConsole dc = new DConsole(1200, 800); //Initializing consoles and array lists
         int currentLevel = 0;
 
-        ArrayList<Structure> structs;
+        ArrayList<Structure> structs = null;
 
         while (true) { //The main game loop containing all menues and the game
             if (dc.getKeyPress('q')) { //Command to exit program
                 System.exit(0);
-            }
-            if (dc.getKeyPress('c')) {
-                boolean chosingLevel = true;
-                while (chosingLevel) { //Command to exit instructions
-                    dc.redraw();
-                    dc.pause(10);
-                    dc.clear();
-                    dc.setBackground(Color.BLACK);
-                    dc.setOrigin(DConsole.ORIGIN_CENTER);
-                    dc.setPaint(Color.WHITE);
-                    dc.drawString("Press '0-9' to select the desired level", 600, 300);
-                    try {
-                        currentLevel = dc.getKeys()[0] - 48;
-                        if (currentLevel < 10 && currentLevel > -1) {
-                            dc.drawString("Level set to " + currentLevel + ".", 600, 350);
-                            dc.redraw();
-                            dc.pause(1000);
-                            chosingLevel = false;
-                        }
-                    } catch (Exception e) {
-
-                    }
-                    dc.setOrigin(DConsole.ORIGIN_TOP_LEFT);
-                }
             }
             if (dc.getKeyPress('i')) { //Command to enter instructions
                 while (!dc.getKeyPress('q')) { //Command to exit instructions
@@ -109,8 +81,7 @@ public class FinalProject {
                 dc.setOrigin(DConsole.ORIGIN_CENTER);
                 dc.setPaint(Color.WHITE);
                 dc.drawString("Press 'i' for instructions.", 600, 300);
-                dc.drawString("Press 'c' to chose a level", 600, 350);
-                dc.drawString("Press 'p' to play.", 600, 400);
+                dc.drawString("Press 'p' to play.", 600, 350);
                 dc.drawString("Press 'q' to quit.", 600, 600);
                 dc.setOrigin(DConsole.ORIGIN_TOP_LEFT);
             }
