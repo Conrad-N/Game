@@ -7,15 +7,16 @@ public class Player {
 
     private boolean isGrounded;
     private boolean isAlive;
+    private boolean scrollingRight;
+    private boolean scrollingLeft;
     private double xChange;
     private double yChange;
-    private double prevXChange;
-    private double prevYChange;
     private double x;
     private double y;
     private double prevX;
     private double prevY;
     private double moveForce;
+    private double scroll;
 
     public Player(double x, double y) {
         this.isGrounded = true;
@@ -27,6 +28,7 @@ public class Player {
         this.prevX = x;
         this.prevY = y;
         this.moveForce = 0;
+        this.scroll = 0;
     }
 
     public boolean isAlive() {
@@ -55,9 +57,11 @@ public class Player {
         }
     }
 
+    public double getScroll() {
+        return this.scroll;
+    }
+
     public void recordPrevValues() { //Record previous values to compare when considering colision
-        this.prevXChange = this.xChange;
-        this.prevYChange = this.yChange;
         this.prevX = this.x;
         this.prevY = this.y;
     }
@@ -93,19 +97,26 @@ public class Player {
     }
 
     public void draw(DConsole dc) { //Set the players color acording to thier charge and draw them
-        dc.fillRect(this.x, this.y, 20, 20);
+        dc.fillRect(this.x - this.scroll, this.y, 20, 20);
     }
 
-    public void checkOutOfBounds() { //Go from off screen right to left resetting prev values to avoid unwanted colision
-        if (this.y < -100 || this.y > 900) { //Also consider if the player is too hight or low and kill them fittingly
-            this.isAlive = false;
+    public void scroll() { //Scroll the screen, this will simply add a position modifier when drawing things.
+        if (this.x - this.scroll > 700) {
+            this.scrollingRight = true;
+        } else if (this.x - scroll < 100) {
+            this.scrollingLeft = true;
         }
-        if (this.x < -20) {
-            this.x = 1180;
-            this.prevX = 1180;
-        } else if (this.x > 1200) {
-            this.x = 0;
-            this.prevX = 0;
+
+        if (this.scrollingRight) {
+            this.scroll += 10;
+            if (this.x - scroll < 550) {
+                this.scrollingRight = false;
+            }
+        } else if (this.scrollingLeft) {
+            this.scroll -= 10;
+            if (this.x - scroll < 250) {
+                this.scrollingRight = false;
+            }
         }
     }
 

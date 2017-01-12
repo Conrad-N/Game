@@ -49,8 +49,8 @@ public class Structure {
         height = i;
     }
 
-    public void draw(DConsole dc) {
+    public void draw(DConsole dc, Player p) {
         dc.setPaint(Color.BLACK);
-        dc.fillRect(this.x, this.y, this.width, this.height);
+        dc.fillRect(this.x - p.getScroll(), this.y, this.width, this.height);
     }
 }
