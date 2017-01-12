@@ -1,5 +1,7 @@
 package pkgfinal.project;
 
+//HEY LESTS ADD __________
+//CUSTOM MOUSE CURSOR
 import DLibX.DConsole;
 import java.awt.Color;
 import java.awt.Font;
@@ -17,6 +19,7 @@ public class FinalProject {
         int highlightedquit = 0; //when you scroll over quit
         int mousex = 0;
         int mousey = 0;
+        int loadgame = 0;
 
         ArrayList<Structure> structs = null;
 
@@ -90,10 +93,19 @@ public class FinalProject {
                 dc.drawString("Load Game", 600, 500);
 
             }
+            dc.pause(5);
             dc.redraw();
+
+            if (dc.isMouseButton(1) && highlightedload == 1) {
+                dc.clear();
+                gamestarted = 1;
+            }
+            if (dc.isMouseButton(1) && highlightednew == 1) {
+                dc.clear();
+                gamestarted = 2;
+            }
         }
-        
-        
+
         while (player.isAlive() && !dc.getKeyPress('k')) { //Check if player has died or killed self
             dc.redraw();
             dc.pause(10);
