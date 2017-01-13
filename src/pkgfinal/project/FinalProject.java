@@ -1,11 +1,14 @@
 package pkgfinal.project;
 
 //CUSTOM MOUSE CURSOR
-
+//FILE.IO
 import DLibX.DConsole;
 import java.awt.Color;
 import java.awt.Font;
+import java.io.File;
 import java.util.*;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 public class FinalProject {
 
@@ -14,21 +17,22 @@ public class FinalProject {
     public static void main(String[] args) {
 
         DConsole dc = new DConsole(1200, 800);
-
+        playSong("miceonvenus");
+        dc.setMouseMode(DConsole.CURSOR_HIDDEN);
         while (true) {
             int gamestarted = 0; //Keeps track of which menu you're on
-            
+
             ArrayList<Structure> structs = null;
             //// THE STRUCTURES NEED TO BE LISTED BELOW ////
             Player player = new Player(0, 0);
-            
+
             while (gamestarted == 0) {
                 dc.setBackground(Color.GRAY);
 
                 dc.setOrigin(DConsole.ORIGIN_CENTER); //Text Display
                 dc.setPaint(Color.BLACK);
                 dc.setFont(new Font("Times New Roman", Font.BOLD, 50));
-                dc.drawString("The name of the game!", 600, 100);
+                dc.drawString("Adventure Quest: The Wandering!!!!", 600, 100);
 
                 dc.setPaint(Color.CYAN);
                 if (dc.getMouseXPosition() >= 490 && dc.getMouseXPosition() <= 710 && dc.getMouseYPosition() >= 385 && dc.getMouseYPosition() <= 435) {
@@ -177,5 +181,16 @@ public class FinalProject {
                 }
             }
         }
+    }
+
+    public static void playSong(String s) {
+        try {
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(new File(s + ".wav")));
+            clip.start();
+        } catch (Exception exc) {
+            exc.printStackTrace(System.out);
+        }
+
     }
 }
