@@ -1,7 +1,10 @@
 package pkgfinal.project;
 
+//CUSTOM MOUSE CURSOR
+
 import DLibX.DConsole;
 import java.awt.Color;
+import java.awt.Font;
 import java.util.*;
 
 public class FinalProject {
@@ -9,45 +12,169 @@ public class FinalProject {
     public static Random randGen = new Random();
 
     public static void main(String[] args) {
-        DConsole dc = new DConsole(1200, 800); //Initializing consoles and array lists
 
-        ArrayList<Structure> structs = null;
+        DConsole dc = new DConsole(1200, 800);
 
-        Player player = new Player(0, 0);
-        //Replace with the actual list of structures
-        //structs = levels.get(currentLevel).getStructures();
+        while (true) {
+            int gamestarted = 0; //Keeps track of which menu you're on
+            
+            ArrayList<Structure> structs = null;
+            //// THE STRUCTURES NEED TO BE LISTED BELOW ////
+            Player player = new Player(0, 0);
+            
+            while (gamestarted == 0) {
+                dc.setBackground(Color.GRAY);
 
-        System.out.println("Enter the name of a save file, or NEW, to start a new game.");
+                dc.setOrigin(DConsole.ORIGIN_CENTER); //Text Display
+                dc.setPaint(Color.BLACK);
+                dc.setFont(new Font("Times New Roman", Font.BOLD, 50));
+                dc.drawString("The name of the game!", 600, 100);
 
-        while (player.isAlive() && !dc.getKeyPress('k')) { //Check if player has died or killed self
-            dc.redraw();
-            dc.pause(10);
-            dc.clear();
-            dc.setOrigin(DConsole.ORIGIN_TOP_LEFT);
+                dc.setPaint(Color.CYAN);
+                if (dc.getMouseXPosition() >= 490 && dc.getMouseXPosition() <= 710 && dc.getMouseYPosition() >= 385 && dc.getMouseYPosition() <= 435) {
+                    dc.fillRect(600, 410, 240, 60);
+                } else {
+                    dc.fillRect(600, 410, 220, 50);
+                }
 
-            player.gravityForce();
-            player.frictionForce();
+                if (dc.getMouseXPosition() >= 490 && dc.getMouseXPosition() <= 710 && dc.getMouseYPosition() >= 485 && dc.getMouseYPosition() <= 535) {
+                    dc.fillRect(600, 510, 240, 60);
+                } else {
+                    dc.fillRect(600, 510, 220, 50);
+                }
 
-            player.setGrounded(false);
-            for (Structure s : structs) {
-                player.isTouchingStructure(s);
+                dc.setOrigin(DConsole.ORIGIN_CENTER);
+                dc.setPaint(Color.BLACK);
 
+                if (dc.getMouseXPosition() >= 490 && dc.getMouseXPosition() <= 710 && dc.getMouseYPosition() >= 385 && dc.getMouseYPosition() <= 435) {
+                    dc.setFont(new Font("Times New Roman", Font.BOLD, 42));
+                    dc.drawString("New Game", 600, 400);
+                } else {
+                    dc.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+                    dc.drawString("New Game", 600, 400);
+                    if (dc.isMouseButton(1)) {
+                        gamestarted = 2;//New Game
+                    }
+                }
+
+                if (dc.getMouseXPosition() >= 490 && dc.getMouseXPosition() <= 710 && dc.getMouseYPosition() >= 485 && dc.getMouseYPosition() <= 535) {
+                    dc.setFont(new Font("Times New Roman", Font.BOLD, 42));
+                    dc.drawString("Load Game", 600, 500);
+                } else {
+                    dc.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+                    dc.drawString("Load Game", 600, 500);
+                    if (dc.isMouseButton(1)) {
+                        gamestarted = 1; //Load
+                    }
+                }
+
+                dc.redraw();
+                dc.pause(20);
+                dc.clear();
+            }
+            while (gamestarted == 1) { //New Game
+                dc.setBackground(Color.GRAY);
+
+                dc.setOrigin(DConsole.ORIGIN_CENTER);
+                dc.setPaint(Color.BLACK);
+                dc.setFont(new Font("Times New Roman", Font.BOLD, 50));
+                dc.drawString("New Game", 600, 50);
+
+                dc.setOrigin(DConsole.ORIGIN_TOP_LEFT);
+                dc.setPaint(Color.CYAN);
+
+                dc.fillRect(171, 320, 171, 160);
+                //256, 400 is the middle
+
+                dc.fillRect(513, 320, 171, 160);
+                //598, 400
+
+                dc.fillRect(855, 320, 171, 160);
+                //940, 400
+
+                dc.setOrigin(DConsole.ORIGIN_CENTER);
+                dc.setPaint(Color.BLACK);
+                dc.setFont(new Font("Times New Roman", Font.BOLD, 45));
+                dc.drawString("Choose a Save File", 600, 700);
+
+                dc.setPaint(Color.MAGENTA);
+                dc.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+
+                dc.drawString("Save 1", 256, 390);
+                dc.drawString("Save 2", 598, 390);
+                dc.drawString("Save 3", 940, 390);
+
+                dc.redraw();
+                dc.pause(20);
+                dc.clear();
             }
 
-            player.moveCommands(dc);
+            while (gamestarted == 2) { //Load Game
+                dc.setBackground(Color.GRAY);
 
-            for (Structure s : structs) {
-                player.isTouchingStructure(s);
+                dc.setOrigin(DConsole.ORIGIN_CENTER);
+                dc.setPaint(Color.BLACK);
+                dc.setFont(new Font("Times New Roman", Font.BOLD, 50));
+                dc.drawString("Load Game", 600, 50);
 
+                dc.setOrigin(DConsole.ORIGIN_TOP_LEFT);
+                dc.setPaint(Color.CYAN);
+
+                dc.fillRect(171, 320, 171, 160);
+                //256, 400 is the middle
+
+                dc.fillRect(513, 320, 171, 160);
+                //598, 400
+
+                dc.fillRect(855, 320, 171, 160);
+                //940, 400
+
+                dc.setOrigin(DConsole.ORIGIN_CENTER);
+                dc.setPaint(Color.BLACK);
+                dc.setFont(new Font("Times New Roman", Font.BOLD, 45));
+                dc.drawString("Choose a Save File", 600, 700);
+
+                dc.setPaint(Color.MAGENTA);
+                dc.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+
+                dc.drawString("Save 1", 256, 390);
+                dc.drawString("Save 2", 598, 390);
+                dc.drawString("Save 3", 940, 390);
+
+                dc.redraw();
+                dc.pause(20);
+                dc.clear();
             }
 
-            player.recordPrevValues();
-            player.move();
-            player.scroll();
-            player.draw(dc);
+            while (true) { //Main game loop
+                dc.redraw();
+                dc.pause(20);
+                dc.clear();
 
-            for (Structure s : structs) {
-                s.draw(dc, player);
+                player.gravityForce();
+                player.frictionForce();
+
+                player.setGrounded(false);
+                for (Structure s : structs) {
+                    player.isTouchingStructure(s);
+
+                }
+
+                player.moveCommands(dc);
+
+                for (Structure s : structs) {
+                    player.isTouchingStructure(s);
+
+                }
+
+                player.recordPrevValues();
+                player.move();
+                player.scroll();
+                player.draw(dc);
+
+                for (Structure s : structs) {
+                    s.draw(dc, player);
+                }
             }
         }
     }
